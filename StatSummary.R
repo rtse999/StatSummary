@@ -52,6 +52,9 @@ for (i in seq_along(mtcars)) {
   tbl <- bind_rows(tbl, newRow)
 }
 # work out how to suppress warnings
+# factors - number of levels, most common level
+# characters - min length, max length, median length
+# logical - true, false
 tbl
 str(tbl)
 typeof(mtcars$cyl)
