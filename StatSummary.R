@@ -60,6 +60,8 @@ summaryStatsTbl <- function(aTable) {
 # factors - number of levels, most common level
 # characters - min length, max length, median length
 # logical - true, false
+# test cases and harness
+# initialise variables fn()
 
 tbl <- summaryStatsTbl(mtcars)
 tbl
