@@ -26,11 +26,13 @@ library(tidyverse)
 summaryStats<-function(x) {
   n<-NROW(x)
   type = typeof(x)
-  median<-median(x)
-  max<-max(x)
-  min<-min (x)
-  sd<- round(sd(x),3)
   na <- sum(is.na(x))
+  if (is.numeric(x) == TRUE) {
+    median<-median(x)
+    max<-max(x)
+    min<-min (x)
+    sd<- round(sd(x),3)
+  } 
   summary<-list(
     type = type, 
     n = n,
@@ -43,20 +45,26 @@ summaryStats<-function(x) {
   return(summary)
 }
 
-tbl <- data.frame()
-for (i in seq_along(mtcars)) {
-  cols <- data.frame(summaryStats(mtcars[[i]]))
-  newRow <- data.frame("name" = colnames(mtcars[i]))
-  newRow <- bind_cols(newRow, cols)
+summaryStatsTbl <- function(aTable) {
+  tbl <- data.frame()
+  for (i in seq_along(aTable)) {
+    cols <- data.frame(summaryStats(aTable[[i]]))
+    newRow <- data.frame("name" = colnames(aTable[i]))
+    newRow <- bind_cols(newRow, cols)
   
-  tbl <- bind_rows(tbl, newRow)
+    tbl <- bind_rows(tbl, newRow)
+  }
+  return(tbl)
 }
 # work out how to suppress warnings
 # factors - number of levels, most common level
 # characters - min length, max length, median length
 # logical - true, false
+
+tbl <- summaryStatsTbl(mtcars)
 tbl
 str(tbl)
 typeof(mtcars$cyl)
 
-       
+summaryStatsTbl(cars)
+summaryStatsTbl(iris)       
