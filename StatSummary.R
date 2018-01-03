@@ -21,26 +21,33 @@ format(Sys.time(), "%a %b %d %H:%M:%S %Y")
 library(tidyverse)
 
 # ------------------------------------------------------------------------
-# Functions
+# Functions to summarise a table of data
 # ------------------------------------------------------------------------
-summaryStats<-function(x) {
-  n<-NROW(x)
-  type = typeof(x)
-  na <- sum(is.na(x))
-  if (is.numeric(x) == TRUE) {
-    median<-median(x)
-    max<-max(x)
-    min<-min (x)
-    sd<- round(sd(x),3)
+
+# Need to test
+initialiseVars <- function(...) {
+  return(NULL)
+}
+
+summaryStats <- function(aVector) {
+# initialiseVars(n, type, na, min, median, max, sd) # test function first
+  n <- nrow(aVector)
+  type <- typeof(aVector)
+  na <- sum(is.na(aVector))
+  if (is.numeric(aVector) == TRUE) {
+    min <- min(aVector)
+    median <- median(aVector)
+    max <- max(aVector)
+    sd <- round(sd(aVector),3)
   } 
-  summary<-list(
+  summary <- list(
     type = type, 
     n = n,
     na = na,
     min = min,
     median = median,
     max = max,
-    sd=sd
+    sd = sd
   )
   return(summary)
 }
@@ -61,7 +68,6 @@ summaryStatsTbl <- function(aTable) {
 # characters - min length, max length, median length
 # logical - true, false
 # test cases and harness
-# initialise variables fn()
 
 tbl <- summaryStatsTbl(mtcars)
 tbl
