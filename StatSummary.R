@@ -23,25 +23,26 @@ library(dplyr)
 # ------------------------------------------------------------------------
 # Functions to summarise a table of data
 # ------------------------------------------------------------------------
-
-# Need to test
-initialiseVars <- function(...) {
-  return(NULL)
-}
-
 summaryStats <- function(aVector) {
-# initialiseVars(n, type, na, min, median, max, sd) # test function first
-  n <- nrow(aVector)
+  n <- NROW(aVector)
   type <- typeof(aVector)
+  class <- class(aVector)
   na <- sum(is.na(aVector))
+  min <- NA
+  median <- NA
+  max <- NA
+  sd <- NA
+  
   if (is.numeric(aVector) == TRUE) {
     min <- min(aVector)
     median <- median(aVector)
     max <- max(aVector)
     sd <- round(sd(aVector),3)
   } 
+  
   summary <- list(
     type = type, 
+    class = class,
     n = n,
     na = na,
     min = min,
@@ -67,12 +68,21 @@ summaryStatsTbl <- function(aTable) {
 # factors - number of levels, most common level
 # characters - min length, max length, median length
 # logical - true, false
-# test cases and harness
 
-tbl <- summaryStatsTbl(mtcars)
-tbl
-str(tbl)
-typeof(mtcars$cyl)
 
-summaryStatsTbl(cars)
-summaryStatsTbl(iris)       
+
+# ------------------------------------------------------------------------
+# Test scripts
+# ------------------------------------------------------------------------
+testRow1 <- summaryStats(mtcars$mpg) # numeric field
+testRow1
+
+testRow2 <- summaryStats(iris$Species) # factor field
+testRow2
+
+testTbl1 <- summaryStatsTbl(mtcars) # dataframe of all numeric columns
+testTbl1
+
+testTbl2 <- summaryStatsTbl(iris) # dataframe of numeric and factor columns
+testTbl2
+
