@@ -1,10 +1,14 @@
 # ------------------------------------------------------------------------
-# Description: Statistical summary table # Link:
+# Description: Statistical summary table 
+# Link:
 #
 # References:
 #  https://stackoverflow.com/questions/28144722/more-comprehensive-summary-function-in-r
 #
-# Location: /Users/raymondtse/Dropbox/Analysis/R Code/StatSummary.r # First created: 23:42 - Tuesday 2 January 2018 # Last modified: 23:42 - Tuesday 2 January 2018 # ------------------------------------------------------------------------
+# Location: /Users/raymondtse/Dropbox/Analysis/R Code/StatSummary.r 
+# First created: 23:42 - Tuesday 2 January 2018 
+# Last modified: 14:21 - Tuesday 9 January 2018
+# ------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------
 # System time
@@ -17,7 +21,8 @@ format(Sys.time(), "%a %b %d %H:%M:%S %Y")
 library(dplyr)
 
 # ------------------------------------------------------------------------
-# Functions to summarise a table of data # ------------------------------------------------------------------------
+# Functions to summarise a table of data 
+# ------------------------------------------------------------------------
 summaryStats <- function(aVector) {
  n <- NROW(aVector)
  type <- typeof(aVector)
@@ -31,9 +36,9 @@ summaryStats <- function(aVector) {
  most <- NA
 
  if (is.numeric(aVector) == TRUE) {
-   min <- min(aVector)
-   median <- median(aVector)
-   max <- max(aVector)
+   min <- min(aVector, na.rm=TRUE)
+   median <- median(aVector, na.rm=TRUE)
+   max <- max(aVector, na.rm=TRUE)
    sd <- round(sd(aVector),3)
  } else if (is.factor(aVector) == TRUE) {
    levels <- nlevels(aVector)
@@ -71,25 +76,4 @@ summaryStatsTbl <- function(aTable) {
 # logical - true, false
 
 
-# ------------------------------------------------------------------------
-# Test scripts
-# ------------------------------------------------------------------------
-testRow1 <- NULL
-testRow1 <- summaryStats(mtcars$mpg) # numeric field
-testRow1
 
-testRow2 <- NULL
-testRow2 <- summaryStats(iris$Species) # factor field
-testRow2
-
-testTbl1 <- NULL
-testTbl1 <- summaryStatsTbl(mtcars) # dataframe of all numeric columns
-testTbl1
-
-testTbl2 <- NULL
-testTbl2 <- summaryStatsTbl(iris) # dataframe of numeric and factor columns
-testTbl2
-
-testTbl3 <- NULL
-testTbl3 <- summaryStatsTbl(esoph) # can the function handle ordered factors ?
-testTbl3
